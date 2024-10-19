@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -5,13 +6,17 @@ from pyrad.client import Client
 from pyrad.dictionary import Dictionary
 from pyrad.packet import AccessRequest, AccessAccept, AccessReject
 from starlette.requests import Request
+from dotenv import load_dotenv
+
+# Загружаем переменные окружения из файла .env
+load_dotenv()
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 # Настройки RADIUS сервера
 RADIUS_SERVER = '127.0.0.1'  # IP адрес RADIUS сервера
-RADIUS_SECRET = b'testing123'  # Секретный ключ
+RADIUS_SECRET = os.getenv('RADIUS_SECRET').encode()  # Секретный ключ из переменной окружения
 RADIUS_PORT = 1812  # Порт для аутентификации (по умолчанию 1812)
 
 @app.get("/", response_class=HTMLResponse)
@@ -34,16 +39,9 @@ async def authenticate(username: str = Form(...), password: str = Form(...)):
 
         # Проверяем код ответа сервера
         if reply.code == AccessAccept:
-            return {"message": "Access granted"}
-        elif reply.code == AccessReject:
-            raise HTTPException(status_code=403, detail="Access denied")
+            return {"message": "Аутентификация успешна!"}
         else:
-            raise HTTPException(status_code=500, detail=f"Unknown reply code: {reply.code}")
-
+            raise HTTPException(status_code=401, detail="Неверный логин или пароль")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to authenticate: {e}")
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+        raise HTTPException(status_code=500, detail=str(e))
 
