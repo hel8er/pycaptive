@@ -9,7 +9,7 @@ python3 -m venv venv
 . venv/bin/activate
 pip install -r requirements.txt
 ```
-edit `.env` file with your FreeRadius secret
+edit `.env` file with your FreeRadius vars
 
 ```bash
 uvicorn app:app
