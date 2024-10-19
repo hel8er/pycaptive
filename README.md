@@ -16,3 +16,12 @@ uvicorn app:app
 ```
 
 Access page on http://127.0.0.1:8000
+
+### Troubleshooting
+
+Test your FreeRadius connection with `radtest <username? <password> <radiusip> <radiusport> <radiussecret>`
+
+Example:
+```bash
+radtest bob hello 127.0.0.1 1812 testing123
+```
