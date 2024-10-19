@@ -29,11 +29,11 @@ Description=Captive Page
 After=network.target
 
 [Service]
-User=your_username  # Замените на имя пользователя, под которым будет запускаться приложение
-Group=your_group     # Замените на группу, к которой принадлежит пользователь
-WorkingDirectory=/path/to/your/app  # Замените на путь к директории вашего приложения
-Environment="PATH=/path/to/your/venv/bin"  # Замените на путь к вашему виртуальному окружению, если используете его
-ExecStart=/path/to/your/venv/bin/uvicorn app:app --host 0.0.0.0 --port 8000  # Замените на путь к uvicorn и имя вашего приложения
+User=your_username  # Replace with the username under which the application will run
+Group=your_group     # Replace with the group to which the user belongs
+WorkingDirectory=/path/to/your/app  # Replace with the path to your application's directory
+Environment="PATH=/path/to/your/venv/bin"  # Replace with the path to your virtual environment, if you are using one
+ExecStart=/path/to/your/venv/bin/uvicorn app:app --host 0.0.0.0 --port 8000  # Replace with the path to uvicorn and your application name
 Restart=always
 
 [Install]
