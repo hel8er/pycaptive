@@ -15,9 +15,9 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 # Настройки RADIUS сервера
-RADIUS_SERVER = '127.0.0.1'  # IP адрес RADIUS сервера
+RADIUS_SERVER = os.getenv('RADIUS_SERVER')  # IP адрес RADIUS сервера из переменной окружения
 RADIUS_SECRET = os.getenv('RADIUS_SECRET').encode()  # Секретный ключ из переменной окружения
-RADIUS_PORT = 1812  # Порт для аутентификации (по умолчанию 1812)
+RADIUS_PORT = int(os.getenv('RADIUS_PORT', 1812))  # Порт для аутентификации из переменной окружения
 
 @app.get("/", response_class=HTMLResponse)
 async def read_form(request: Request):
