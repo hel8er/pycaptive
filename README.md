@@ -16,6 +16,10 @@ uvicorn app:app
 ```
 
 Access page on http://127.0.0.1:8000
+or
+```
+curl -X POST 127.0.0.1:8000/auth -d "username=bob&password=hello"
+```
 
 ## systemd unit
 ```
